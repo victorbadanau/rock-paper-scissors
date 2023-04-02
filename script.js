@@ -22,7 +22,6 @@ buttons.forEach(button => {
 
 const resultsDiv = document.querySelector("div.results");
 const resultList = document.createElement("ul");
-    //resultsDiv.appendChild(resultList);
 
 const message1 = document.createElement("h1");
 message1.textContent = "You Win!";
@@ -42,7 +41,6 @@ function playRound() {
         listItem = document.createElement('li');
         listItem.textContent = "That's a Tie!";
         resultList.appendChild(listItem);
-//         return listItem; 
     }
     else if ((playerSelection === "Rock" && computerSelection === "Scissors") ||
          (playerSelection === "Scissors" && computerSelection === "Paper") ||
@@ -51,14 +49,12 @@ function playRound() {
         listItem.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`;
         resultList.appendChild(listItem);
         playerScore++;
-//         return listItem;
     }
     else {
         listItem = document.createElement('li');
         listItem.textContent = `You Lose! ${computerSelection} beats ${playerSelection}!`;
         resultList.appendChild(listItem);
         computerScore++;
-//         return listItem;
     }
 }
 
@@ -89,6 +85,7 @@ function playGame() {
         resultsDiv.appendChild(message2);  
     }
 }
+
 function removeAllChildNodes(parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.firstChild);
