@@ -1,81 +1,96 @@
-const options = ["Rock", "Paper", "Scissors"]
-// Function to get a random computer choice from the above array
+let playerScore = 0;
+let computerScore = 0;
+let computerSelection;
+let playerSelection;
+
+const player = document.querySelector(".player-score");
+player.textContent = `${playerScore}`;
+
+const computer = document.querySelector(".computer-score");
+computer.textContent = `${computerScore}`;
+
+const buttons = document.querySelectorAll(".btn");
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+
+    computerSelection = getComputerChoice();
+    playerSelection = button.value;
+    playGame();
+  });
+});
+
+const resultsDiv = document.querySelector("div.results");
+const resultList = document.createElement("ul");
+    //resultsDiv.appendChild(resultList);
+
+const message1 = document.createElement("h1");
+message1.textContent = "You Win!";
+
+const message2 = document.createElement("h1");
+message2.textContent = "You Lose!";
+
+const options = ["rock", "paper", "scissors"];
+
 function getComputerChoice(){
     const computerChoice = options[Math.floor(Math.random() * options.length)];
     return computerChoice;
-}
-//Function to check the winner of one round of the game
-function checkWinner(playerSelection, computerSelection) {
+    }
+
+function playRound() {
     if (playerSelection === computerSelection) {
-        return "tie";
+        listItem = document.createElement('li');
+        listItem.textContent = "That's a Tie!";
+        resultList.appendChild(listItem);
+//         return listItem; 
     }
-    else if ((playerSelection === "Rock" && computerSelection === "Scissors") ||
-        (playerSelection === "Scissors" && computerSelection === "Paper") ||
-        (playerSelection === "Paper" && computerSelection === "Rock")) {
-        return "player";
-        }
-    else {
-        return "computer"
-    }
-}
-//Function to display a message with the result of the round played
-function playRound (playerSelection, computerSelection) {
-    const result = checkWinner (playerSelection, computerSelection);
-    if (result === "tie") {
-        return "That's a Tie!";
-    }
-    else if (result === "player") {
-        return `You Win! ${playerSelection} beats ${computerSelection}!`; 
+    else if ((playerSelection === "rock" && computerSelection === "scissors") ||
+         (playerSelection === "scissors" && computerSelection === "paper") ||
+        (playerSelection === "paper" && computerSelection === "rock")) {
+        listItem = document.createElement('li');
+        listItem.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`;
+        resultList.appendChild(listItem);
+        playerScore++;
+//         return listItem;
     }
     else {
-        return `You Lose! ${computerSelection} beats ${playerSelection}!`;
-    }
-}
-//Function to get the player choice through a prompt window
-function getPlayerChoice() {
-    let validInput = false;
-    while (validInput === false) {
-        const playerChoice = prompt("Rock Paper Scissors! Make your choice! Your life depends on it!");
-        if (playerChoice === null) {
-            continue;
-        }
-        const playerChoiceCorrected = playerChoice.charAt(0).toUpperCase()+playerChoice.toLowerCase().slice(1);
-        //the above line formats the player input so that it corresponds to the option array formatting
-        if (options.includes(playerChoiceCorrected)) {
-            validInput = true;
-            return playerChoiceCorrected;
-        }
+        listItem = document.createElement('li');
+        listItem.textContent = `You Lose! ${computerSelection} beats ${playerSelection}!`;
+        resultList.appendChild(listItem);
+        computerScore++;
+//         return listItem;
     }
 }
 
-//Function to play the game 5 times and print the results to the console
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    console.log("Welcome to the Rock Paper Scissors game!");
-    console.log("----------"); // puts some delimitation between the welcoming message and the printed results
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = getPlayerChoice();
-        const computerSelection = getComputerChoice();
-        console.log(playRound(playerSelection, computerSelection));
-        console.log("----------"); // puts some delimitation between played round results
-        if (checkWinner(playerSelection, computerSelection) === "player") {
-            playerScore++;
-        }
-        else if (checkWinner(playerSelection, computerSelection) === "computer") {
-            computerScore++;
-        }
-    }
-    console.log("Game Over!");
-   if (playerScore > computerScore) {
-    console.log("You won the game!");
-   }
-   else if (computerScore > playerScore) {
-    console.log("You lost the game!");
-   }
-   else {
-    console.log("It's a Tie!")
-   }
-}
+function playGame() {
+    playRound();
+    player.textContent = `${playerScore}`;
+    computer.textContent = `${computerScore}`;
+    resultsDiv.appendChild(resultList);
+    message1.remove();
+    message2.remove();
 
-game()
+    if (playerScore == 5) {
+        playerScore = 0;
+        computerScore = 0;
+        player.textContent = `${playerScore}`;
+        computer.textContent = `${computerScore}`;
+        removeAllChildNodes(resultList);
+        resultList.remove();
+        resultsDiv.appendChild(message1);        
+    }
+    else if (computerScore == 5) {
+        playerScore = 0;
+        computerScore = 0;
+        player.textContent = `${playerScore}`;
+        computer.textContent = `${computerScore}`;
+        removeAllChildNodes(resultList);
+        resultList.remove();
+        resultsDiv.appendChild(message2);  
+    }
+}
+function removeAllChildNodes(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
