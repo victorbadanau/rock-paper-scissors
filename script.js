@@ -30,7 +30,7 @@ message1.textContent = "You Win!";
 const message2 = document.createElement("h1");
 message2.textContent = "You Lose!";
 
-const options = ["rock", "paper", "scissors"];
+const options = ["Rock", "Paper", "Scissors"];
 
 function getComputerChoice(){
     const computerChoice = options[Math.floor(Math.random() * options.length)];
@@ -44,9 +44,9 @@ function playRound() {
         resultList.appendChild(listItem);
 //         return listItem; 
     }
-    else if ((playerSelection === "rock" && computerSelection === "scissors") ||
-         (playerSelection === "scissors" && computerSelection === "paper") ||
-        (playerSelection === "paper" && computerSelection === "rock")) {
+    else if ((playerSelection === "Rock" && computerSelection === "Scissors") ||
+         (playerSelection === "Scissors" && computerSelection === "Paper") ||
+        (playerSelection === "Paper" && computerSelection === "Rock")) {
         listItem = document.createElement('li');
         listItem.textContent = `You Win! ${playerSelection} beats ${computerSelection}!`;
         resultList.appendChild(listItem);

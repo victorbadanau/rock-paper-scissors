@@ -98,3 +98,7 @@ ul {
     flex-wrap: wrap;
     list-style-type: none;
 }
+
+li {
+    font-size: 12px;
+}
